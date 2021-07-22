@@ -126,7 +126,6 @@ void DrawingMap::updateGraph(Box real_window, Box mind_window, double (*af)(doub
 	sf::Vector2f scale = sf::Vector2f((float)videoWidth / real_window.width, (float)videoHeight / real_window.height);
 	if (real_window.width != currentWidth || real_window.height != currentHeight)
 	{
-		//window.setSize(sf::Vector2u(real_window.width, real_window.height));
 		currentWidth = real_window.width, currentHeight = real_window.height;
         delete graphPixels;
 		graphPixels = new sf::Uint8[real_window.width * real_window.height * 4];
@@ -164,23 +163,17 @@ void DrawingMap::updateGraph(Box real_window, Box mind_window, double (*af)(doub
 		{
 			btw_lines = MARK_SIZES[i];
 			int16_t j = i + 1;
-			/*while (fmod(MARK_SIZES[j] / MARK_SIZES[i], 1.0) != 0)
-				++j;*/ 
 			btw_nums = MARK_SIZES[j];
 			break;
 		}
 	}
 // Make bounds
 // Result drawing
-
-	// image -> texture -> sprite -> shape
 	sf::Texture graphTexture;
 	graphTexture.create(real_window.width, real_window.height);
 	graphTexture.update(graphPixels, real_window.width, real_window.height, 0, 0);
 	sf::Sprite result_sprite; 
 	result_sprite.setTexture(graphTexture);
-	//Drawing options
-	//result_sprite.setPosition(sf::Vector2f(real_window.x, real_window.y));
 	result_sprite.setScale(scale);
 	window->draw(result_sprite);
 	window->draw(y_axis);
@@ -195,10 +188,6 @@ void DrawingMap::updateGraph(Box real_window, Box mind_window, double (*af)(doub
 		real_window, mind_window, MARK_LINE, sf::Vector2f(btw_lines, 0), scale);
 	float num_x = std::max(mind_window.x, std::min(mind_window.x + mind_window.width - 3 * NUM_OFFSET * pix_delta, 0.f));
 	float num_y = std::max(mind_window.y + 2.5f*NUM_OFFSET * pix_delta, std::min(mind_window.y + mind_window.height, 0.f));
-	/*drawNumbers(num_x, 0, real_window, mind_window, sf::Vector2f(0, -btw_nums), scale, 0);
-	drawNumbers(num_x, 0, real_window, mind_window, sf::Vector2f(0, btw_nums), scale, 0);
-	drawNumbers(0, num_y, real_window, mind_window, sf::Vector2f(-btw_nums, 0), scale, 1);
-	drawNumbers(0, num_y, real_window, mind_window, sf::Vector2f(btw_nums, 0), scale, 1);*/
     drawLine(af, sf::Color(204, 0, 0), real_window, mind_window, scale, sf::Vector2f(0, 0));
     drawLine(bf, sf::Color(0, 0, 204), real_window, mind_window, scale, sf::Vector2f(-0.5, 0));
     drawLine(cf, sf::Color(0, 204, 0), real_window, mind_window, scale, sf::Vector2f(0, 0));

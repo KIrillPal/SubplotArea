@@ -131,9 +131,9 @@ double getArea(double eps)
     FP ab(af, bf);
     FP ac(af, cf);
     FP bc(bf, cf);
-    ab.localized = localize(ab, -0.5, SCREEN_R, 0.1);
+    ab.localized = localize(ab, SCREEN_L, SCREEN_R, 0.1);
     ac.localized = localize(ac, SCREEN_L, SCREEN_R, 0.1);
-    bc.localized = localize(bc, -0.5, SCREEN_R, 0.1);
+    bc.localized = localize(bc, SCREEN_L, SCREEN_R, 0.1);
     ab.roots = real_roots(ab, eps);
     ac.roots = real_roots(ac, eps);
     bc.roots = real_roots(bc, eps);
@@ -157,9 +157,9 @@ double getArea(double eps)
 
 bool isInArea(float x, float y)
 {
-    if (x < -0.5) return false;
+   // if (x < -0.5) return false;
     double y1 = f1(x);
     double y2 = f2(x);
     double y3 = f3(x);
-    return (y < y1 && y > y2 && y > y3 && y >= 0);
+    return (y < y1 && y > std::max(y2, y3) && y >= 0);
 }
